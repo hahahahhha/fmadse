@@ -1,0 +1,9 @@
+model,group_size,wq_bits,datatype,perplexity
+Mistral-7B-v0.1,128,4,mixed_bitmod,5.458950042724609
+Mistral-7B-v0.1,64,4,mixed_bitmod,5.427289962768555
+Mistral-7B-v0.1,128,3,mixed_bitmod,6.283272743225098
+Mistral-7B-v0.1,64,3,mixed_bitmod,5.959770202636719
+opt-1.3b,128,4,mixed_bitmod,15.198835372924805
+opt-1.3b,64,4,mixed_bitmod,15.195038795471191
+opt-1.3b,128,3,mixed_bitmod,17.691450119018555
+opt-1.3b,64,3,mixed_bitmod,16.65786361694336

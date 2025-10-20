@@ -7,7 +7,7 @@ slurm_log/
 .DS_Store
 
 *.pt
-
+smoothquant/ppl_eval_*
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

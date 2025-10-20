@@ -1,0 +1,14 @@
+- name: demo_4bit
+  datatype_support:
+    - int4
+    - fp4
+  mx_support: true
+
+- name: demo_mixed
+  datatype_support:
+    - fp3
+    - fp4
+    - fp6_e2m3
+    - fp8_e4m3
+    - int8
+  mx_support: false

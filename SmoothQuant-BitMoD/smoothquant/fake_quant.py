@@ -113,7 +113,8 @@ class W8A8Linear(nn.Module):
 
     @staticmethod
     def from_float(
-        module, weight_quant="per_channel", act_quant="per_token", group_size=128, wq_bits=4, datatype='mixed', quantize_output=False
+        module, weight_quant="per_channel", act_quant="per_token", group_size=128, wq_bits=4, datatype='mixed', quantize_output=False,
+        datatype_support: List[str]=['fp3','fp4','fp6_e2m3','fp6_e3m2','fp8_e4m3','fp8_e5m2','int4','int8'],if_mx_support:bool=False,
     ):
         assert isinstance(module, torch.nn.Linear)
         new_module = W8A8Linear(
@@ -132,14 +133,14 @@ class W8A8Linear(nn.Module):
                 module.weight, n_bits=8
             )
         # AHMED: Add other weight quantization methods here.
-        elif weight_quant == "mod":
+        elif weight_quant == "fmadse":
             grouped_weight = module.weight.view(-1, group_size)
-            quantized_grouped_weight = search_datatype(grouped_weight, wq_bits=wq_bits, datatype=datatype)
+            quantized_grouped_weight = search_datatype(grouped_weight, wq_bits=wq_bits, datatype_support=datatype_support,if_mx_support=if_mx_support)
             new_module.weight = quantized_grouped_weight.view_as(module.weight)
-        elif weight_quant == "mod_asym":
-            grouped_weight = module.weight.view(-1, group_size)
-            quantized_grouped_weight = quant_int_asym(grouped_weight, wq_bits=wq_bits)
-            new_module.weight = quantized_grouped_weight.view_as(module.weight)
+        # elif weight_quant == "mod_asym":
+        #     grouped_weight = module.weight.view(-1, group_size)
+        #     quantized_grouped_weight = quant_int_asym(grouped_weight, wq_bits=wq_bits)
+        #     new_module.weight = quantized_grouped_weight.view_as(module.weight)
         else:
             raise ValueError(f"Invalid weight_quant: {weight_quant}")
         new_module.weight_quant_name = weight_quant
@@ -152,23 +153,26 @@ class W8A8Linear(nn.Module):
 
 
 def quantize_opt(
-    model, weight_quant="per_tensor", act_quant="per_tensor", group_size=128, wq_bits=4, datatype="wrong", quantize_bmm_input=True
+    model, weight_quant="per_tensor", act_quant="per_tensor", group_size=128, wq_bits_list=[4,4,4], datatype="wrong", quantize_bmm_input=True,
+    datatype_support: List[str]=['fp3','fp4','fp6_e2m3','fp6_e3m2','fp8_e4m3','fp8_e5m2','int4','int8'],if_mx_support:bool=False,
 ):
     from transformers.models.opt.modeling_opt import (
         OPTAttention,
         OPTDecoderLayer,
     )
-
+    assert len(wq_bits_list)==3
     for name, m in model.model.named_modules():
         if isinstance(m, OPTDecoderLayer):
+            wq_bits=wq_bits_list[0]
             m.fc1 = W8A8Linear.from_float(
-                m.fc1, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype
+                m.fc1, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
             m.fc2 = W8A8Linear.from_float(
-                m.fc2, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype
+                m.fc2, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
         elif isinstance(m, OPTAttention):
             # Her we simulate quantizing BMM inputs by quantizing the output of q_proj, k_proj, v_proj
+            wq_bits=wq_bits_list[1]
             m.q_proj = W8A8Linear.from_float(
                 m.q_proj,
                 weight_quant=weight_quant,
@@ -177,6 +181,8 @@ def quantize_opt(
                 wq_bits=wq_bits,
                 datatype=datatype,
                 quantize_output=quantize_bmm_input,
+                datatype_support=datatype_support,
+                if_mx_support=if_mx_support
             )
             m.k_proj = W8A8Linear.from_float(
                 m.k_proj,
@@ -186,6 +192,9 @@ def quantize_opt(
                 wq_bits=wq_bits,
                 datatype=datatype,
                 quantize_output=quantize_bmm_input,
+                datatype_support=datatype_support,
+                if_mx_support=if_mx_support
+
             )
             m.v_proj = W8A8Linear.from_float(
                 m.v_proj,
@@ -195,18 +204,21 @@ def quantize_opt(
                 wq_bits=wq_bits,
                 datatype=datatype,
                 quantize_output=quantize_bmm_input,
+                datatype_support=datatype_support,
+                if_mx_support=if_mx_support
             )
             m.out_proj = W8A8Linear.from_float(
-                m.out_proj, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype
+                m.out_proj, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
+    wq_bits=wq_bits_list[2]
     model.lm_head = W8A8Linear.from_float(
-        model.lm_head, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype
+        model.lm_head, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
     )
     return model
 
 
 def quantize_llama_like(
-    model, weight_quant="per_channel", act_quant="per_token", group_size=128, wq_bits=4, datatype="wrong", quantize_bmm_input=False
+    model, weight_quant="per_channel", act_quant="per_token", group_size=128, wq_bits_list=[4,4,4], datatype="wrong", quantize_bmm_input=False,datatype_support: List[str]=['fp3','fp4','fp6_e2m3','fp6_e3m2','fp8_e4m3','fp8_e5m2','int4','int8'],if_mx_support:bool=False,
 ):
     from transformers.models.llama.modeling_llama import (
         LlamaAttention,
@@ -217,20 +229,22 @@ def quantize_llama_like(
         MistralAttention,
         MistralMLP,
     )
-
+    assert len(wq_bits_list)==3
     for name, m in model.model.named_modules():
         if isinstance(m, (LlamaMLP, MistralMLP)):
+            wq_bits=wq_bits_list[0]
             m.gate_proj = W8A8Linear.from_float(
-                m.gate_proj, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype
+                m.gate_proj, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
             m.up_proj = W8A8Linear.from_float(
-                m.up_proj, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype
+                m.up_proj, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
             m.down_proj = W8A8Linear.from_float(
-                m.down_proj, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype
+                m.down_proj, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
         elif isinstance(m, (LlamaAttention, MistralAttention)):
             # Her we simulate quantizing BMM inputs by quantizing the output of q_proj, k_proj, v_proj
+            wq_bits=wq_bits_list[1]
             m.q_proj = W8A8Linear.from_float(
                 m.q_proj,
                 weight_quant=weight_quant,
@@ -238,7 +252,7 @@ def quantize_llama_like(
                 group_size=group_size,
                 wq_bits=wq_bits,
                 datatype=datatype,
-                quantize_output=quantize_bmm_input,
+                quantize_output=quantize_bmm_input,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
             m.k_proj = W8A8Linear.from_float(
                 m.k_proj,
@@ -247,7 +261,7 @@ def quantize_llama_like(
                 group_size=group_size,
                 wq_bits=wq_bits,
                 datatype=datatype,
-                quantize_output=quantize_bmm_input,
+                quantize_output=quantize_bmm_input,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
             m.v_proj = W8A8Linear.from_float(
                 m.v_proj,
@@ -256,99 +270,113 @@ def quantize_llama_like(
                 group_size=group_size,
                 wq_bits=wq_bits,
                 datatype=datatype,
-                quantize_output=quantize_bmm_input,
+                quantize_output=quantize_bmm_input,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
             m.o_proj = W8A8Linear.from_float(
-                m.o_proj, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype
+                m.o_proj, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
+    wq_bits=wq_bits_list[2]
     model.lm_head = W8A8Linear.from_float(
-        model.lm_head, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype
+        model.lm_head, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
     )
     return model
 
 
 def quantize_mixtral(
-    model, weight_quant="per_channel", act_quant="per_token", quantize_bmm_input=False
+    model, weight_quant="per_channel", act_quant="per_token", quantize_bmm_input=False, group_size=128, wq_bits_list=[4,4,4,4], datatype="wrong", datatype_support: List[str]=['fp3','fp4','fp6_e2m3','fp6_e3m2','fp8_e4m3','fp8_e5m2','int4','int8'],if_mx_support:bool=False,
 ):
     from transformers.models.mixtral.modeling_mixtral import (
         MixtralAttention,
         MixtralSparseMoeBlock,
         MixtralBLockSparseTop2MLP,
     )
-
+    assert len(wq_bits_list)==4
     for name, m in model.model.named_modules():
         if isinstance(m, MixtralBLockSparseTop2MLP):
+            wq_bits=wq_bits_list[0]
             m.w1 = W8A8Linear.from_float(
-                m.w1, weight_quant=weight_quant, act_quant=act_quant
+                m.w1, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
             m.w2 = W8A8Linear.from_float(
-                m.w2, weight_quant=weight_quant, act_quant=act_quant
+                m.w2, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
             m.w3 = W8A8Linear.from_float(
-                m.w3, weight_quant=weight_quant, act_quant=act_quant
+                m.w3, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
         elif isinstance(m, MixtralAttention):
             # Her we simulate quantizing BMM inputs by quantizing the output of q_proj, k_proj, v_proj
+            wq_bits=wq_bits_list[1]
             m.q_proj = W8A8Linear.from_float(
                 m.q_proj,
                 weight_quant=weight_quant,
                 act_quant=act_quant,
-                quantize_output=quantize_bmm_input,
+                quantize_output=quantize_bmm_input,group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
             m.k_proj = W8A8Linear.from_float(
                 m.k_proj,
                 weight_quant=weight_quant,
                 act_quant=act_quant,
-                quantize_output=quantize_bmm_input,
+                quantize_output=quantize_bmm_input, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
             m.v_proj = W8A8Linear.from_float(
                 m.v_proj,
                 weight_quant=weight_quant,
                 act_quant=act_quant,
-                quantize_output=quantize_bmm_input,
+                quantize_output=quantize_bmm_input, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
             m.o_proj = W8A8Linear.from_float(
-                m.o_proj, weight_quant=weight_quant, act_quant=act_quant
+                m.o_proj, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
         elif isinstance(m, MixtralSparseMoeBlock):
+            wq_bits=wq_bits_list[2]
             m.gate = W8A8Linear.from_float(
-                m.gate, weight_quant=weight_quant, act_quant=act_quant
+                m.gate, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
+    wq_bits=wq_bits_list[3]
+    model.lm_head = W8A8Linear.from_float(
+    model.lm_head, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
+    )
     return model
 
 
 def quantize_falcon(
-    model, weight_quant="per_channel", act_quant="per_token", quantize_bmm_input=True
+    model, weight_quant="per_channel", act_quant="per_token", quantize_bmm_input=True,group_size=128, wq_bits_list=[4,4,4], datatype="wrong", datatype_support: List[str]=['fp3','fp4','fp6_e2m3','fp6_e3m2','fp8_e4m3','fp8_e5m2','int4','int8'],if_mx_support:bool=False,
 ):
     from transformers.models.falcon.modeling_falcon import (
         FalconAttention,
         FalconMLP,
     )
-
+    assert len(wq_bits_list)==3
     for name, m in model.named_modules():
         if isinstance(m, FalconMLP):
+            wq_bits=wq_bits_list[0]
             m.dense_h_to_4h = W8A8Linear.from_float(
-                m.dense_h_to_4h, weight_quant=weight_quant, act_quant=act_quant
+                m.dense_h_to_4h, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
             m.dense_4h_to_h = W8A8Linear.from_float(
-                m.dense_4h_to_h, weight_quant=weight_quant, act_quant=act_quant
+                m.dense_4h_to_h, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
         elif isinstance(m, FalconAttention):
             # Her we simulate quantizing BMM inputs by quantizing the output of q_proj, k_proj, v_proj
+            wq_bits=wq_bits_list[1]
             m.query_key_value = W8A8Linear.from_float(
                 m.query_key_value,
                 weight_quant=weight_quant,
                 act_quant=act_quant,
-                quantize_output=quantize_bmm_input,
+                quantize_output=quantize_bmm_input, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
             m.dense = W8A8Linear.from_float(
-                m.dense, weight_quant=weight_quant, act_quant=act_quant
+                m.dense, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
+    wq_bits=wq_bits_list[2]
+    model.lm_head = W8A8Linear.from_float(
+    model.lm_head, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
+    )
     return model
 
 
 def quantize_model(
-    model, weight_quant="per_channel", act_quant="per_token", group_size= 128, wq_bits=4, datatype="wrong", quantize_bmm_input=False
+    model, weight_quant="per_channel", act_quant="per_token", group_size= 128,  datatype="wrong", quantize_bmm_input=False,wq_bits_list=[4,4,4],datatype_support: List[str]=['fp3','fp4','fp6_e2m3','fp6_e3m2','fp8_e4m3','fp8_e5m2','int4','int8'],if_mx_support:bool=False,
 ):
     from transformers.models.opt.modeling_opt import OPTPreTrainedModel
     from transformers.models.llama.modeling_llama import LlamaPreTrainedModel
@@ -362,9 +390,11 @@ def quantize_model(
             weight_quant=weight_quant,
             act_quant=act_quant,
             group_size=group_size,
-            wq_bits=wq_bits,
             datatype=datatype,
             quantize_bmm_input=quantize_bmm_input,
+            wq_bits_list=wq_bits_list,
+            datatype_support=datatype_support,
+            if_mx_support=if_mx_support,
         )
     elif isinstance(model, (LlamaPreTrainedModel, MistralPreTrainedModel)):
         return quantize_llama_like(
@@ -372,23 +402,37 @@ def quantize_model(
             weight_quant=weight_quant,
             act_quant=act_quant,
             group_size=group_size,
-            wq_bits=wq_bits,
             datatype=datatype,
             quantize_bmm_input=quantize_bmm_input,
+            wq_bits_list=wq_bits_list,
+            datatype_support=datatype_support,
+            if_mx_support=if_mx_support,
+
         )
     elif isinstance(model, MixtralPreTrainedModel):
         return quantize_mixtral(
             model,
             weight_quant=weight_quant,
             act_quant=act_quant,
+            group_size=group_size,
+            datatype=datatype,
             quantize_bmm_input=quantize_bmm_input,
+            wq_bits_list=wq_bits_list,
+            datatype_support=datatype_support,
+            if_mx_support=if_mx_support,
+
         )
     elif isinstance(model, FalconPreTrainedModel):
         return quantize_falcon(
             model,
             weight_quant=weight_quant,
             act_quant=act_quant,
+            group_size=group_size,
+            datatype=datatype,
             quantize_bmm_input=quantize_bmm_input,
+            wq_bits_list=wq_bits_list,
+            datatype_support=datatype_support,
+            if_mx_support=if_mx_support,
         )
     else:
         raise ValueError(f"Unsupported model type: {type(model)}")
