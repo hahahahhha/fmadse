@@ -18,12 +18,12 @@ python smoothquant/ppl_eval.py \
   --alpha $alpha \
   --model_path $model \
   --act_scales_path "$ACT_SCALES" \
-  --hardware_yaml hardwareconfig/hardware.yaml \
+  --hardware_yaml hardwareconfig/hardware2.yaml \
   --search_mode grid \
   --wquantization fmadse \
   --datatype fmadsedontcare \
   --group_size 128 \
-  --results_path results_mod/demo_results.txt \
+  --results_path results_mod/demo_results2.txt \
   --results_db results_mod/quant_results.db \
   --quantize \
   --smooth \

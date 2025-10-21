@@ -1,0 +1,2 @@
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[8,8,8], datatype_support_used=[fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 14.665708541870117
