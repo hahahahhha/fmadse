@@ -400,42 +400,75 @@ def lookup_cached_result(
     conn: sqlite3.Connection,
     model_path: str,
     config_signature: str,
-    # hardware_signature: str,
     args,
     act_scales_path: Optional[str],
     n_samples: Optional[int],
+    hardware_signature: str = None,
 ) -> Optional[float]:
-    cursor = conn.execute(
-        """
-        SELECT perplexity
-        FROM quant_results
-        WHERE model_path = ?
-          AND config_signature = ?
-          AND wquantization = ?
-          AND datatype = ?
-          AND group_size = ?
-          AND alpha = ?
-          AND smooth = ?
-          AND quantize = ?
-          AND act_scales_path IS ?
-          AND n_samples IS ?
-        """,
-        (
-            model_path,
-            config_signature,
-            # hardware_signature,
-            args.wquantization,
-            args.datatype,
-            args.group_size,
-            args.alpha,
-            int(args.smooth),
-            int(args.quantize),
-            act_scales_path,
-            n_samples,
-        ),
-    )
-    row = cursor.fetchone()
-    return float(row[0]) if row else None
+    if hardware_signature is None:
+        cursor = conn.execute(
+            """
+            SELECT perplexity
+            FROM quant_results
+            WHERE model_path = ?
+                AND config_signature = ?
+                AND wquantization = ?
+                AND datatype = ?
+                AND group_size = ?
+                AND alpha = ?
+                AND smooth = ?
+                AND quantize = ?
+                AND act_scales_path IS ?
+                AND n_samples IS ?
+            """,
+            (
+                model_path,
+                config_signature,
+                args.wquantization,
+                args.datatype,
+                args.group_size,
+                args.alpha,
+                int(args.smooth),
+                int(args.quantize),
+                act_scales_path,
+                n_samples,
+            ),
+        )
+        row = cursor.fetchone()
+        return float(row[0]) if row else None
+    else:
+        cursor = conn.execute(
+            """
+            SELECT perplexity
+            FROM quant_results
+            WHERE model_path = ?
+                AND config_signature = ?
+                AND hardware_signature = ?
+                AND wquantization = ?
+                AND datatype = ?
+                AND group_size = ?
+                AND alpha = ?
+                AND smooth = ?
+                AND quantize = ?
+                AND act_scales_path IS ?
+                AND n_samples IS ?
+            """,
+            (
+                model_path,
+                config_signature,
+                hardware_signature,
+                args.wquantization,
+                args.datatype,
+                args.group_size,
+                args.alpha,
+                int(args.smooth),
+                int(args.quantize),
+                act_scales_path,
+                n_samples,
+            ),
+        )
+        row = cursor.fetchone()
+        return float(row[0]) if row else None
 
 
 def store_result(
@@ -610,6 +643,26 @@ def main():
             n_samples_key,
         )
         if cached_value is not None:
+            if lookup_cached_result(
+                db_conn,
+                args.model_path,
+                config_signature,
+                args,
+                act_scales_key,
+                n_samples_key,
+                hardware_signature,
+            ) is None:
+                store_result(
+                    db_conn,
+                    args.model_path,
+                    config_signature,
+                    hardware_signature,
+                    config["hardware"]["name"],
+                    args,
+                    act_scales_key,
+                    n_samples_key,
+                    cached_value,
+                )
             print("  -> Using cached result.")
             print(f"  -> Perplexity: {cached_value}")
             results.append(
@@ -619,6 +672,7 @@ def main():
                     "cached": True,
                 }
             )
+
             continue
 
         model = prepare_model()
