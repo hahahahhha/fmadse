@@ -1,0 +1,256 @@
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[3,3,3], datatype_support_used=[fp3], if_mx_support=True
+Perplexity: 13291.978515625
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[3,3,4], datatype_support_used=[fp3,fp4,int4], if_mx_support=True
+Perplexity: 13134.0400390625
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[3,3,6], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2], if_mx_support=True
+Perplexity: 12219.2578125
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[3,3,8], datatype_support_used=[fp3,fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 11734.4482421875
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[3,4,3], datatype_support_used=[fp3,fp4,int4], if_mx_support=True
+Perplexity: 11656.62890625
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[3,4,4], datatype_support_used=[fp3,fp4,int4], if_mx_support=True
+Perplexity: 10023.5947265625
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[3,4,6], datatype_support_used=[fp3,fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=True
+Perplexity: 9194.8251953125
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[3,4,8], datatype_support_used=[fp3,fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=True
+Perplexity: 9039.220703125
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[3,6,3], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2], if_mx_support=True
+Perplexity: 11257.2197265625
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[3,6,4], datatype_support_used=[fp3,fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=True
+Perplexity: 11048.2900390625
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[3,6,6], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2], if_mx_support=True
+Perplexity: 9257.5341796875
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[3,6,8], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 8993.921875
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[3,8,3], datatype_support_used=[fp3,fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 11186.265625
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[3,8,4], datatype_support_used=[fp3,fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=True
+Perplexity: 10835.8779296875
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[3,8,6], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 9304.009765625
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[3,8,8], datatype_support_used=[fp3,fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 8922.8505859375
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[4,3,3], datatype_support_used=[fp3,fp4,int4], if_mx_support=True
+Perplexity: 11751.86328125
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[4,3,4], datatype_support_used=[fp3,fp4,int4], if_mx_support=True
+Perplexity: 1406.07177734375
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[4,3,6], datatype_support_used=[fp3,fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=True
+Perplexity: 252.23968505859375
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[4,3,8], datatype_support_used=[fp3,fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=True
+Perplexity: 205.76182556152344
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[4,4,3], datatype_support_used=[fp3,fp4,int4], if_mx_support=True
+Perplexity: 2221.66845703125
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[4,4,4], datatype_support_used=[fp4,int4], if_mx_support=True
+Perplexity: 51.86183547973633
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[4,4,6], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=True
+Perplexity: 20.937110900878906
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[4,4,8], datatype_support_used=[fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=True
+Perplexity: 19.536575317382812
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[4,6,3], datatype_support_used=[fp3,fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=True
+Perplexity: 1898.9583740234375
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[4,6,4], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=True
+Perplexity: 43.69291305541992
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[4,6,6], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=True
+Perplexity: 19.856060028076172
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[4,6,8], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=True
+Perplexity: 18.751962661743164
+CACHED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[4,8,3], datatype_support_used=[fp3,fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=True
+Perplexity: 1859.0335693359375
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[4,8,4], datatype_support_used=[fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=True
+Perplexity: 42.89710235595703
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[4,8,6], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=True
+Perplexity: 19.727073669433594
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[4,8,8], datatype_support_used=[fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=True
+Perplexity: 18.666650772094727
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[6,3,3], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2], if_mx_support=True
+Perplexity: 10715.05078125
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[6,3,4], datatype_support_used=[fp3,fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=True
+Perplexity: 997.2548828125
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[6,3,6], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2], if_mx_support=True
+Perplexity: 206.153564453125
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[6,3,8], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 183.6561279296875
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[6,4,3], datatype_support_used=[fp3,fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=True
+Perplexity: 1566.270263671875
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[6,4,4], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=True
+Perplexity: 45.465763092041016
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[6,4,6], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=True
+Perplexity: 16.350696563720703
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[6,4,8], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=True
+Perplexity: 15.731590270996094
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[6,6,3], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2], if_mx_support=True
+Perplexity: 1340.948974609375
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[6,6,4], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=True
+Perplexity: 36.77886962890625
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[6,6,6], datatype_support_used=[fp6_e2m3,fp6_e3m2], if_mx_support=True
+Perplexity: 15.369241714477539
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[6,6,8], datatype_support_used=[fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 14.783941268920898
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[6,8,3], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 1340.7442626953125
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[6,8,4], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=True
+Perplexity: 36.232364654541016
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[6,8,6], datatype_support_used=[fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 15.319823265075684
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[6,8,8], datatype_support_used=[fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 14.719076156616211
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[8,3,3], datatype_support_used=[fp3,fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 10762.8876953125
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[8,3,4], datatype_support_used=[fp3,fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=True
+Perplexity: 1062.7493896484375
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[8,3,6], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 234.1930389404297
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[8,3,8], datatype_support_used=[fp3,fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 193.6976318359375
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[8,4,3], datatype_support_used=[fp3,fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=True
+Perplexity: 1555.271240234375
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[8,4,4], datatype_support_used=[fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=True
+Perplexity: 45.33613204956055
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[8,4,6], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=True
+Perplexity: 16.359107971191406
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[8,4,8], datatype_support_used=[fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=True
+Perplexity: 15.712510108947754
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[8,6,3], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 1337.511962890625
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[8,6,4], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=True
+Perplexity: 36.88962936401367
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[8,6,6], datatype_support_used=[fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 15.373478889465332
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[8,6,8], datatype_support_used=[fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 14.75947093963623
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[8,8,3], datatype_support_used=[fp3,fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 1320.3653564453125
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[8,8,4], datatype_support_used=[fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=True
+Perplexity: 36.32968521118164
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[8,8,6], datatype_support_used=[fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 15.269575119018555
+COMPUTED: hardware=full_precision (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=True), wq_bits_list=[8,8,8], datatype_support_used=[fp8_e4m3,fp8_e5m2,int8], if_mx_support=True
+Perplexity: 14.690019607543945
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[3,3,3], datatype_support_used=[fp3], if_mx_support=False
+Perplexity: 13291.978515625
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[3,3,4], datatype_support_used=[fp3,fp4,int4], if_mx_support=False
+Perplexity: 13134.0400390625
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[3,3,6], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2], if_mx_support=False
+Perplexity: 12219.2578125
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[3,3,8], datatype_support_used=[fp3,fp8_e4m3,fp8_e5m2,int8], if_mx_support=False
+Perplexity: 11734.4482421875
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[3,4,3], datatype_support_used=[fp3,fp4,int4], if_mx_support=False
+Perplexity: 11656.62890625
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[3,4,4], datatype_support_used=[fp3,fp4,int4], if_mx_support=False
+Perplexity: 10023.5947265625
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[3,4,6], datatype_support_used=[fp3,fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=False
+Perplexity: 9194.8251953125
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[3,4,8], datatype_support_used=[fp3,fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=False
+Perplexity: 9039.220703125
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[3,6,3], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2], if_mx_support=False
+Perplexity: 11257.2197265625
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[3,6,4], datatype_support_used=[fp3,fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=False
+Perplexity: 11048.2900390625
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[3,6,6], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2], if_mx_support=False
+Perplexity: 9257.5341796875
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[3,6,8], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=False
+Perplexity: 8993.921875
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[3,8,3], datatype_support_used=[fp3,fp8_e4m3,fp8_e5m2,int8], if_mx_support=False
+Perplexity: 11186.265625
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[3,8,4], datatype_support_used=[fp3,fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=False
+Perplexity: 10835.8779296875
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[3,8,6], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=False
+Perplexity: 9304.009765625
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[3,8,8], datatype_support_used=[fp3,fp8_e4m3,fp8_e5m2,int8], if_mx_support=False
+Perplexity: 8922.8505859375
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[4,3,3], datatype_support_used=[fp3,fp4,int4], if_mx_support=False
+Perplexity: 11751.86328125
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[4,3,4], datatype_support_used=[fp3,fp4,int4], if_mx_support=False
+Perplexity: 1406.07177734375
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[4,3,6], datatype_support_used=[fp3,fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=False
+Perplexity: 252.23968505859375
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[4,3,8], datatype_support_used=[fp3,fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=False
+Perplexity: 205.76182556152344
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[4,4,3], datatype_support_used=[fp3,fp4,int4], if_mx_support=False
+Perplexity: 2221.66845703125
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[4,4,4], datatype_support_used=[fp4,int4], if_mx_support=False
+Perplexity: 51.86183547973633
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[4,4,6], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=False
+Perplexity: 20.937110900878906
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[4,4,8], datatype_support_used=[fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=False
+Perplexity: 19.536575317382812
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[4,6,3], datatype_support_used=[fp3,fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=False
+Perplexity: 1898.9583740234375
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[4,6,4], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=False
+Perplexity: 43.69291305541992
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[4,6,6], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=False
+Perplexity: 19.856060028076172
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[4,6,8], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=False
+Perplexity: 18.751962661743164
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[4,8,3], datatype_support_used=[fp3,fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=False
+Perplexity: 1859.0335693359375
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[4,8,4], datatype_support_used=[fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=False
+Perplexity: 42.89710235595703
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[4,8,6], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=False
+Perplexity: 19.727073669433594
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[4,8,8], datatype_support_used=[fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=False
+Perplexity: 18.666650772094727
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[6,3,3], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2], if_mx_support=False
+Perplexity: 10715.05078125
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[6,3,4], datatype_support_used=[fp3,fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=False
+Perplexity: 997.2548828125
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[6,3,6], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2], if_mx_support=False
+Perplexity: 206.153564453125
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[6,3,8], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=False
+Perplexity: 183.6561279296875
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[6,4,3], datatype_support_used=[fp3,fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=False
+Perplexity: 1566.270263671875
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[6,4,4], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=False
+Perplexity: 45.465763092041016
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[6,4,6], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=False
+Perplexity: 16.350696563720703
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[6,4,8], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=False
+Perplexity: 15.731590270996094
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[6,6,3], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2], if_mx_support=False
+Perplexity: 1340.948974609375
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[6,6,4], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,int4], if_mx_support=False
+Perplexity: 36.77886962890625
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[6,6,6], datatype_support_used=[fp6_e2m3,fp6_e3m2], if_mx_support=False
+Perplexity: 15.369241714477539
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[6,6,8], datatype_support_used=[fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=False
+Perplexity: 14.783941268920898
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[6,8,3], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=False
+Perplexity: 1340.7442626953125
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[6,8,4], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=False
+Perplexity: 36.232364654541016
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[6,8,6], datatype_support_used=[fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=False
+Perplexity: 15.319823265075684
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[6,8,8], datatype_support_used=[fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=False
+Perplexity: 14.719076156616211
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[8,3,3], datatype_support_used=[fp3,fp8_e4m3,fp8_e5m2,int8], if_mx_support=False
+Perplexity: 10762.8876953125
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[8,3,4], datatype_support_used=[fp3,fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=False
+Perplexity: 1062.7493896484375
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[8,3,6], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=False
+Perplexity: 234.1930389404297
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[8,3,8], datatype_support_used=[fp3,fp8_e4m3,fp8_e5m2,int8], if_mx_support=False
+Perplexity: 193.6976318359375
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[8,4,3], datatype_support_used=[fp3,fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=False
+Perplexity: 1555.271240234375
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[8,4,4], datatype_support_used=[fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=False
+Perplexity: 45.33613204956055
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[8,4,6], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=False
+Perplexity: 16.359107971191406
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[8,4,8], datatype_support_used=[fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=False
+Perplexity: 15.712510108947754
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[8,6,3], datatype_support_used=[fp3,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=False
+Perplexity: 1337.511962890625
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[8,6,4], datatype_support_used=[fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=False
+Perplexity: 36.88962936401367
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[8,6,6], datatype_support_used=[fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=False
+Perplexity: 15.373478889465332
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[8,6,8], datatype_support_used=[fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=False
+Perplexity: 14.75947093963623
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[8,8,3], datatype_support_used=[fp3,fp8_e4m3,fp8_e5m2,int8], if_mx_support=False
+Perplexity: 1320.3653564453125
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[8,8,4], datatype_support_used=[fp4,fp8_e4m3,fp8_e5m2,int4,int8], if_mx_support=False
+Perplexity: 36.32968521118164
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[8,8,6], datatype_support_used=[fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int8], if_mx_support=False
+Perplexity: 15.269575119018555
+COMPUTED: hardware=full_precision_wo_mx (bits=[3, 4, 6, 8], datatype_support=fp3,fp4,fp6_e2m3,fp6_e3m2,fp8_e4m3,fp8_e5m2,int4,int8, mx_support=False), wq_bits_list=[8,8,8], datatype_support_used=[fp8_e4m3,fp8_e5m2,int8], if_mx_support=False
+Perplexity: 14.690019607543945

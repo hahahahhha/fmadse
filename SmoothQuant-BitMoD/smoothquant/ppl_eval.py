@@ -5,7 +5,7 @@ import random
 import sqlite3
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 import torch
 import torch.nn as nn
@@ -357,6 +357,7 @@ def init_results_db(db_path: str) -> sqlite3.Connection:
             act_scales_path TEXT,
             n_samples INTEGER,
             perplexity REAL,
+            layer_datatypes TEXT,
             created_at TEXT,
             UNIQUE (
                 model_path,
@@ -373,6 +374,12 @@ def init_results_db(db_path: str) -> sqlite3.Connection:
         )
         """
     )
+    columns = {
+        row[1]
+        for row in conn.execute("PRAGMA table_info(quant_results)")
+    }
+    if "layer_datatypes" not in columns:
+        conn.execute("ALTER TABLE quant_results ADD COLUMN layer_datatypes TEXT")
     conn.commit()
     return conn
 
@@ -404,71 +411,59 @@ def lookup_cached_result(
     act_scales_path: Optional[str],
     n_samples: Optional[int],
     hardware_signature: str = None,
-) -> Optional[float]:
+) -> Optional[Dict[str, Any]]:
+    query = """
+        SELECT perplexity, layer_datatypes
+        FROM quant_results
+        WHERE model_path = ?
+            AND config_signature = ?
+            {hardware_clause}
+            AND wquantization = ?
+            AND datatype = ?
+            AND group_size = ?
+            AND alpha = ?
+            AND smooth = ?
+            AND quantize = ?
+            AND act_scales_path IS ?
+            AND n_samples IS ?
+    """
     if hardware_signature is None:
-        cursor = conn.execute(
-            """
-            SELECT perplexity
-            FROM quant_results
-            WHERE model_path = ?
-                AND config_signature = ?
-                AND wquantization = ?
-                AND datatype = ?
-                AND group_size = ?
-                AND alpha = ?
-                AND smooth = ?
-                AND quantize = ?
-                AND act_scales_path IS ?
-                AND n_samples IS ?
-            """,
-            (
-                model_path,
-                config_signature,
-                args.wquantization,
-                args.datatype,
-                args.group_size,
-                args.alpha,
-                int(args.smooth),
-                int(args.quantize),
-                act_scales_path,
-                n_samples,
-            ),
+        hardware_clause = ""
+        params = (
+            model_path,
+            config_signature,
+            args.wquantization,
+            args.datatype,
+            args.group_size,
+            args.alpha,
+            int(args.smooth),
+            int(args.quantize),
+            act_scales_path,
+            n_samples,
         )
-        row = cursor.fetchone()
-        return float(row[0]) if row else None
     else:
-        cursor = conn.execute(
-            """
-            SELECT perplexity
-            FROM quant_results
-            WHERE model_path = ?
-                AND config_signature = ?
-                AND hardware_signature = ?
-                AND wquantization = ?
-                AND datatype = ?
-                AND group_size = ?
-                AND alpha = ?
-                AND smooth = ?
-                AND quantize = ?
-                AND act_scales_path IS ?
-                AND n_samples IS ?
-            """,
-            (
-                model_path,
-                config_signature,
-                hardware_signature,
-                args.wquantization,
-                args.datatype,
-                args.group_size,
-                args.alpha,
-                int(args.smooth),
-                int(args.quantize),
-                act_scales_path,
-                n_samples,
-            ),
+        hardware_clause = "AND hardware_signature = ?"
+        params = (
+            model_path,
+            config_signature,
+            hardware_signature,
+            args.wquantization,
+            args.datatype,
+            args.group_size,
+            args.alpha,
+            int(args.smooth),
+            int(args.quantize),
+            act_scales_path,
+            n_samples,
         )
-        row = cursor.fetchone()
-        return float(row[0]) if row else None
+
+    cursor = conn.execute(query.format(hardware_clause=hardware_clause), params)
+    row = cursor.fetchone()
+    if not row:
+        return None
+    perplexity = float(row[0])
+    layer_meta = json.loads(row[1]) if row[1] else None
+    return {"perplexity": perplexity, "layer_datatypes": layer_meta}
 
 
 def store_result(
@@ -481,7 +476,11 @@ def store_result(
     act_scales_path: Optional[str],
     n_samples: Optional[int],
     perplexity: float,
+    layer_datatypes: Optional[Dict[str, Any]],
 ) -> None:
+    layer_datatypes_json = (
+        json.dumps(layer_datatypes, sort_keys=True) if layer_datatypes else None
+    )
     conn.execute(
         """
         INSERT OR REPLACE INTO quant_results (
@@ -498,9 +497,10 @@ def store_result(
             act_scales_path,
             n_samples,
             perplexity,
+            layer_datatypes,
             created_at
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             model_path,
@@ -516,6 +516,7 @@ def store_result(
             act_scales_path,
             n_samples,
             perplexity,
+            layer_datatypes_json,
             datetime.utcnow().isoformat(),
         ),
     )
@@ -633,7 +634,7 @@ def main():
         config_signature = make_config_signature(config)
         hardware_signature = make_hardware_signature(config["hardware"])
 
-        cached_value = lookup_cached_result(
+        cached_record = lookup_cached_result(
             db_conn,
             args.model_path,
             config_signature,
@@ -642,7 +643,9 @@ def main():
             act_scales_key,
             n_samples_key,
         )
-        if cached_value is not None:
+        if cached_record is not None:
+            cached_value = cached_record["perplexity"]
+            cached_layer_datatypes = cached_record.get("layer_datatypes")
             if lookup_cached_result(
                 db_conn,
                 args.model_path,
@@ -662,6 +665,7 @@ def main():
                     act_scales_key,
                     n_samples_key,
                     cached_value,
+                    cached_layer_datatypes,
                 )
             print("  -> Using cached result.")
             print(f"  -> Perplexity: {cached_value}")
@@ -670,6 +674,7 @@ def main():
                     "config": config,
                     "perplexity": cached_value,
                     "cached": True,
+                    "layer_datatypes": cached_layer_datatypes,
                 }
             )
 
@@ -690,6 +695,7 @@ def main():
                 datatype_support=config['hardware']["datatype_support"],
                 if_mx_support=config["if_mx_support"],
             )
+        layer_datatypes = getattr(model, "layer_quant_datatypes", None)
 
         ppl_value = evaluator.evaluate(model)
         print(f"  -> Perplexity: {ppl_value}")
@@ -704,6 +710,7 @@ def main():
             act_scales_key,
             n_samples_key,
             float(ppl_value),
+            layer_datatypes,
         )
 
         results.append(
@@ -711,6 +718,7 @@ def main():
                 "config": config,
                 "perplexity": float(ppl_value),
                 "cached": False,
+                "layer_datatypes": layer_datatypes,
             }
         )
 

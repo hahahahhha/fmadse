@@ -146,6 +146,40 @@ def quant_int(w_fp16, wq_bits:int=4, group_size: Optional[int]=None):
 
 
 @torch.no_grad()
+def quantize_tensor_to_datatype(
+    tensor: torch.Tensor,
+    wq_bits: int,
+    datatype: Optional[str],
+    *,
+    if_mx: Optional[bool] = None,
+) -> torch.Tensor:
+    """
+    Quantize an arbitrary tensor along its last dimension using the provided datatype.
+    The helper reshapes the tensor to 2-D before reusing ``quant_datatype``.
+    """
+    if datatype is None:
+        return tensor
+
+    if if_mx is None:
+        if_mx = datatype.startswith("mx_")
+
+    if tensor.numel() == 0:
+        return tensor
+
+    original_shape = tensor.shape
+    last_dim = original_shape[-1]
+    reshaped = tensor.reshape(-1, last_dim)
+    quantized = quant_datatype(
+        reshaped,
+        wq_bits=wq_bits,
+        datatype=datatype,
+        group_size=None,
+        if_mx=if_mx,
+    )
+    return quantized.reshape(original_shape)
+
+
+@torch.no_grad()
 def quant_int_asym(w_fp16, wq_bits:int=4, group_size: Optional[int]=None):
     """
         Asymmetric INT quantization.
@@ -327,20 +361,47 @@ def search_datatype(w_fp16, wq_bits:int=4, datatype_support: List[str]=['fp3','f
     w_fp16 = w_fp16.unsqueeze(-1).reshape(K, NUM_GROUP, group_size)
     q_tensor = torch.zeros_like(w_fp16)
     
-    error = torch.full([K, NUM_GROUP], 1e3, dtype=w_fp16.dtype, device=w_fp16.device)
+    # error = torch.full([K, NUM_GROUP], 1e3, dtype=w_fp16.dtype, device=w_fp16.device)
+    datatype_list_mx=datatype_list
     for datatype in datatype_list:
         if if_mx_support and ('mx_'+datatype in WQ_BIT_MAPPING_DATATYPE_MX[wq_bits]):
-            w_fp16_tmp = quant_datatype(w_fp16, wq_bits=wq_bits, datatype='mx_'+datatype, group_size=None, if_mx=True)
-        else:
-            w_fp16_tmp = quant_datatype(w_fp16, wq_bits=wq_bits, datatype=datatype, group_size=None, if_mx=False)
-        quant_error = (w_fp16_tmp - w_fp16).pow(2).mean(-1)
-        update_mask = torch.lt(quant_error, error)
-        error[update_mask] = quant_error[update_mask]
-        q_tensor[update_mask] = w_fp16_tmp[update_mask]
+            datatype_list_mx.append('mx_'+datatype)
+    # for datatype in datatype_list_mx:
+    #     if datatype.startswith('mx_'):
+    #         w_fp16_tmp = quant_datatype(w_fp16, wq_bits=wq_bits, datatype=datatype, group_size=None, if_mx=True)
+    #     else:
+    #         w_fp16_tmp = quant_datatype(w_fp16, wq_bits=wq_bits, datatype=datatype, group_size=None, if_mx=False)
+    #     quant_error = (w_fp16_tmp - w_fp16).pow(2).mean(-1)
+    #     update_mask = torch.lt(quant_error, error)
+    #     error[update_mask] = quant_error[update_mask]
+    #     q_tensor[update_mask] = w_fp16_tmp[update_mask]
 
-        del w_fp16_tmp, quant_error, update_mask
-    
-    return q_tensor.reshape(K, C)
+    #     del w_fp16_tmp, quant_error, update_mask
+    best_err = float('inf')
+    best_q = None
+    best_dtype = None
+
+    for datatype in datatype_list_mx:
+        is_mx = datatype.startswith('mx_')
+        w_fp16_tmp = quant_datatype(
+            w_fp16, wq_bits=wq_bits, datatype=datatype, group_size=None, if_mx=is_mx
+        )
+
+        # 计算整体误差（全张量 MSE）
+        mse = (w_fp16_tmp - w_fp16).pow(2).mean()
+
+        # 记录最小整体误差的量化结果
+        if mse.item() < best_err:
+            best_err = mse.item()
+            best_q = w_fp16_tmp
+            best_dtype = datatype
+        else:
+            # 不是最优的临时张量及时释放
+            del w_fp16_tmp
+
+    # 结果：选用整体误差最小的量化张量
+    q_tensor = best_q
+    return q_tensor.reshape(K, C),best_dtype
 
 
 def quant_model(model, wq_bits: Optional[int]=None, wq_datatype: Optional[str]=None, wq_groupsize: Optional[int]=None):
@@ -378,4 +439,15 @@ def quant_model(model, wq_bits: Optional[int]=None, wq_datatype: Optional[str]=N
         for n, m in model.named_modules():
             if isinstance(m, torch.nn.Linear):
                 print(f'Quantizing layer: {n}')
-                m.weight.data = search_datatype(m.weight.data, wq_bits=wq_bits, datatype=wq_datatype, group_size=wq_groupsize)
+                quantized_weight, dtype = search_datatype(
+                    m.weight.data,
+                    wq_bits=wq_bits,
+                    datatype=wq_datatype,
+                    group_size=wq_groupsize,
+                )
+                m.weight.data = quantized_weight
+                try:
+                    m.weight_datatype = dtype
+                    m.weight_wq_bits = wq_bits
+                except Exception:
+                    pass

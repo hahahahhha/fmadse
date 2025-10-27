@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 from functools import partial
-
+from typing import Dict, Optional
 
 from mod import *
 
@@ -97,6 +97,12 @@ class W8A8Linear(nn.Module):
             self.output_quant_name = "None"
             self.output_quant = lambda x: x
 
+        self.weight_datatype = None
+        self.weight_wq_bits = None
+        self.weight_is_mx = False
+        self.weight_group_size = None
+        self.use_weight_dtype_for_activation = False
+
     def to(self, *args, **kwargs):
         super(W8A8Linear, self).to(*args, **kwargs)
         self.weight = self.weight.to(*args, **kwargs)
@@ -106,10 +112,23 @@ class W8A8Linear(nn.Module):
 
     @torch.no_grad()
     def forward(self, x):
-        q_x = self.act_quant(x)
+        q_x = self._quantize_input(x)
         y = torch.functional.F.linear(q_x, self.weight, self.bias)
         q_y = self.output_quant(y)
         return q_y
+
+    @torch.no_grad()
+    def _quantize_input(self, x: torch.Tensor) -> torch.Tensor:
+        if self.use_weight_dtype_for_activation and self.weight_datatype:
+            bits = self.weight_wq_bits if self.weight_wq_bits is not None else 0
+            if bits > 0:
+                return quantize_tensor_to_datatype(
+                    x,
+                    wq_bits=bits,
+                    datatype=self.weight_datatype,
+                    if_mx=self.weight_is_mx,
+                )
+        return self.act_quant(x)
 
     @staticmethod
     def from_float(
@@ -135,8 +154,19 @@ class W8A8Linear(nn.Module):
         # AHMED: Add other weight quantization methods here.
         elif weight_quant == "fmadse":
             grouped_weight = module.weight.view(-1, group_size)
-            quantized_grouped_weight = search_datatype(grouped_weight, wq_bits=wq_bits, datatype_support=datatype_support,if_mx_support=if_mx_support)
+            quantized_grouped_weight, selected_datatype = search_datatype(
+                grouped_weight,
+                wq_bits=wq_bits,
+                datatype_support=datatype_support,
+                if_mx_support=if_mx_support,
+                group_size=None,
+            )
             new_module.weight = quantized_grouped_weight.view_as(module.weight)
+            new_module.weight_datatype = selected_datatype
+            new_module.weight_wq_bits = wq_bits
+            new_module.weight_is_mx = bool(selected_datatype and selected_datatype.startswith("mx_"))
+            new_module.weight_group_size = group_size
+            new_module.use_weight_dtype_for_activation = selected_datatype is not None
         # elif weight_quant == "mod_asym":
         #     grouped_weight = module.weight.view(-1, group_size)
         #     quantized_grouped_weight = quant_int_asym(grouped_weight, wq_bits=wq_bits)
@@ -167,12 +197,13 @@ def quantize_opt(
             m.fc1 = W8A8Linear.from_float(
                 m.fc1, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
+            wq_bits=wq_bits_list[1]
             m.fc2 = W8A8Linear.from_float(
                 m.fc2, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
         elif isinstance(m, OPTAttention):
             # Her we simulate quantizing BMM inputs by quantizing the output of q_proj, k_proj, v_proj
-            wq_bits=wq_bits_list[1]
+            wq_bits=wq_bits_list[2]
             m.q_proj = W8A8Linear.from_float(
                 m.q_proj,
                 weight_quant=weight_quant,
@@ -210,11 +241,39 @@ def quantize_opt(
             m.out_proj = W8A8Linear.from_float(
                 m.out_proj, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
-    wq_bits=wq_bits_list[2]
-    model.lm_head = W8A8Linear.from_float(
-        model.lm_head, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
-    )
+    # wq_bits=wq_bits_list[2]
+    # model.lm_head = W8A8Linear.from_float(
+    #     model.lm_head, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
+    # )
     return model
+
+
+def _collect_layer_datatypes(model: torch.nn.Module) -> Dict[str, Dict[str, Optional[object]]]:
+    metadata: Dict[str, Dict[str, Optional[object]]] = {}
+    for name, module in model.named_modules():
+        weight_dtype = getattr(module, "weight_datatype", None)
+        if weight_dtype is None:
+            continue
+
+        entry: Dict[str, Optional[object]] = {
+            "weight_dtype": weight_dtype,
+            "activation_dtype": weight_dtype
+            if getattr(module, "use_weight_dtype_for_activation", False)
+            else None,
+        }
+
+        weight_bits = getattr(module, "weight_wq_bits", None)
+        if weight_bits is not None:
+            entry["wq_bits"] = weight_bits
+
+        group_size = getattr(module, "weight_group_size", None)
+        if group_size is not None:
+            entry["group_size"] = group_size
+
+        entry["if_mx"] = bool(getattr(module, "weight_is_mx", False))
+        metadata[name] = entry
+
+    return metadata
 
 
 def quantize_llama_like(
@@ -239,12 +298,13 @@ def quantize_llama_like(
             m.up_proj = W8A8Linear.from_float(
                 m.up_proj, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
+            wq_bits=wq_bits_list[1]
             m.down_proj = W8A8Linear.from_float(
                 m.down_proj, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
         elif isinstance(m, (LlamaAttention, MistralAttention)):
             # Her we simulate quantizing BMM inputs by quantizing the output of q_proj, k_proj, v_proj
-            wq_bits=wq_bits_list[1]
+            wq_bits=wq_bits_list[2]
             m.q_proj = W8A8Linear.from_float(
                 m.q_proj,
                 weight_quant=weight_quant,
@@ -275,10 +335,10 @@ def quantize_llama_like(
             m.o_proj = W8A8Linear.from_float(
                 m.o_proj, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
             )
-    wq_bits=wq_bits_list[2]
-    model.lm_head = W8A8Linear.from_float(
-        model.lm_head, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
-    )
+    # wq_bits=wq_bits_list[2]
+    # model.lm_head = W8A8Linear.from_float(
+    #     model.lm_head, weight_quant=weight_quant, act_quant=act_quant, group_size=group_size, wq_bits=wq_bits, datatype=datatype,datatype_support=datatype_support,if_mx_support=if_mx_support
+    # )
     return model
 
 
@@ -384,8 +444,9 @@ def quantize_model(
     from transformers.models.mixtral.modeling_mixtral import MixtralPreTrainedModel
     from transformers.models.falcon.modeling_falcon import FalconPreTrainedModel
 
+    quantized_model: Optional[torch.nn.Module] = None
     if isinstance(model, OPTPreTrainedModel):
-        return quantize_opt(
+        quantized_model = quantize_opt(
             model,
             weight_quant=weight_quant,
             act_quant=act_quant,
@@ -397,7 +458,7 @@ def quantize_model(
             if_mx_support=if_mx_support,
         )
     elif isinstance(model, (LlamaPreTrainedModel, MistralPreTrainedModel)):
-        return quantize_llama_like(
+        quantized_model = quantize_llama_like(
             model,
             weight_quant=weight_quant,
             act_quant=act_quant,
@@ -407,10 +468,9 @@ def quantize_model(
             wq_bits_list=wq_bits_list,
             datatype_support=datatype_support,
             if_mx_support=if_mx_support,
-
         )
     elif isinstance(model, MixtralPreTrainedModel):
-        return quantize_mixtral(
+        quantized_model = quantize_mixtral(
             model,
             weight_quant=weight_quant,
             act_quant=act_quant,
@@ -420,10 +480,9 @@ def quantize_model(
             wq_bits_list=wq_bits_list,
             datatype_support=datatype_support,
             if_mx_support=if_mx_support,
-
         )
     elif isinstance(model, FalconPreTrainedModel):
-        return quantize_falcon(
+        quantized_model = quantize_falcon(
             model,
             weight_quant=weight_quant,
             act_quant=act_quant,
@@ -434,5 +493,10 @@ def quantize_model(
             datatype_support=datatype_support,
             if_mx_support=if_mx_support,
         )
-    else:
+
+    if quantized_model is None:
         raise ValueError(f"Unsupported model type: {type(model)}")
+
+    layer_metadata = _collect_layer_datatypes(quantized_model)
+    setattr(quantized_model, "layer_quant_datatypes", layer_metadata)
+    return quantized_model

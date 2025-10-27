@@ -1,0 +1,22 @@
+- name: full_precision
+  datatype_support:
+    - fp3
+    - fp4
+    - fp6_e2m3
+    - fp6_e3m2
+    - fp8_e4m3
+    - fp8_e5m2
+    - int4
+    - int8
+  mx_support: true
+- name: full_precision_wo_mx
+  datatype_support:
+    - fp3
+    - fp4
+    - fp6_e2m3
+    - fp6_e3m2
+    - fp8_e4m3
+    - fp8_e5m2
+    - int4
+    - int8
+  mx_support: false
